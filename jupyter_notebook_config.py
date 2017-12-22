@@ -7,10 +7,19 @@ import os
 import errno
 import stat
 
-c = get_config()
+
+# One could call get_config() directly, but it isn't defined in every
+# environment. This solution makes the linter happy.
+c = globals()['get_config']()
+# c = get_config()
+
 c.NotebookApp.ip = '*'
 c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False
+
+# Kernel config
+c.InteractiveShellApp.matplotlib = 'notebook'
+
 
 # Generate a self-signed certificate
 if 'GEN_CERT' in os.environ:
@@ -34,3 +43,12 @@ if 'GEN_CERT' in os.environ:
     # Restrict access to the file
     os.chmod(pem_file, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = pem_file
+else:
+    # this is how 3scan creates a consistent auth key for each docker container
+    # notebook.pem is created separately in the docker image
+    c.NotebookApp.certfile = u'/root/certs/notebook.pem'  # location of your certificate file
+
+    # passwd is the usual kxxxxxxx one
+    # TODO(mjp) update this to my password
+    c.NotebookApp.password = u'sha1:eae4011526bd:1678c4bb6734d36a2c147a765310eaa47249f2d4'
+    # use a known, fixed port
