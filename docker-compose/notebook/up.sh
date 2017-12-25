@@ -5,7 +5,7 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+echo $DIR
 USAGE="Usage: `basename $0` [--secure | --letsencrypt] [--password PASSWORD] [--secrets SECRETS_VOLUME]"
 
 # Parse args to determine security settings
@@ -66,7 +66,7 @@ docker volume create --name "$WORK_VOLUME"
 
 # Bring up a notebook container, using container name as project name
 echo "Bringing up notebook '$NAME'"
-docker-compose -f "$DIR/$CONFIG" -p "$NAME" up -d
+docker-compose -f "$DIR/$CONFIG" -p "$NAME" up
 
-IP=$(docker-machine ip $(docker-machine active))
-echo "Notebook $NAME listening on $IP:$PORT"
+# IP=$(docker-machine ip $(docker-machine active))
+# echo "Notebook $NAME listening on $IP:$PORT"
