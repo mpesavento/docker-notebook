@@ -36,10 +36,9 @@ notebook/down.sh
 
 The basic install maps a `work/` volume for persistent storage in the docker container. This will be visible in the jupyter notebook as `work/`.
 
-I've also added another mount point, `PROJECT_DIR`. This is set in the `notebook/env.sh` file, and points to the default value specified in that document. This maps to a `projects/` folder in the root directory of the jupyter notebook server file system
+I've also added another mount point, `PROJECT_DIR`. This is set in the `notebook/env.sh` file, and points to the default value specified in that document. This maps to a `projects/` folder in the root directory of the jupyter notebook server file system.
 
 It can also be changed to any folder you would like by setting it as an environment variable when running `up.sh`.
-
 ```
 PROJECT_DIR="/home/jovyan/data" notebook/up.sh
 ```

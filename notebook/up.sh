@@ -61,13 +61,16 @@ fi
 source "$DIR/env.sh"
 
 # Create a Docker volume to store notebooks
+echo "Creating docker volume:"
 docker volume create --name "$WORK_VOLUME"
 
 # Bring up a notebook container, using container name as project name
 echo "Bringing up notebook '$NAME'"
 echo "port '$PORT'"
+echo "mapped volume: $PROJECT_DIR"
 echo "working volume: $WORK_VOLUME"
-docker-compose -f "$DIR/$CONFIG" -p "$NAME" up #-d
+docker-compose -f "$DIR/$CONFIG" -p "$NAME" up -d
+
 
 # uncomment this if you are using docker-machine
 # IP=$(docker-machine ip $(docker-machine active))
