@@ -1,16 +1,16 @@
-This example demonstrate how to deploy docker-stack notebook containers to any Docker Machine-controlled host using Docker Compose.
 
-## Prerequisites
+# Dockerized data science and machine learning Jupyter notebook
 
-* [Docker Engine](https://docs.docker.com/engine/) 1.10.0+
-* [Docker Machine](https://docs.docker.com/machine/) 0.6.0+
-* [Docker Compose](https://docs.docker.com/compose/) 1.6.0+
+This jupyter notebook docker instance builds and deploy's a dockerized jupyter notebook server,
+containing basic python3, numpy/scipy, pandas/seaborn, tensorflow and keras, and more essential packages for creating, analyzing, and modeling a wide variety of data sets.
 
-See the [installation instructions](https://docs.docker.com/engine/installation/) for your environment.
+* [Original documentation for jupyter's `docker-compose` example](https://github.com/jupyter/docker-stacks/blob/master/examples/docker-compose/README.md)
+* [Original documentation for jupyter's `tensorflow-notebook`](https://github.com/jupyter/docker-stacks/blob/master/tensorflow-notebook/README.md)
+
 
 ## Quickstart
 
-Build and run a `jupyter/minimal-notebook` container on a VirtualBox VM on local desktop.
+Build and run a `jupyter/tensorflow-notebook` container on a VirtualBox VM on local desktop.
 
 ```
 # create a Docker Machine-controlled VirtualBox VM
@@ -32,26 +32,20 @@ To stop and remove the container:
 notebook/down.sh
 ```
 
+### Notes on volume mapping
 
-## FAQ
+The basic install maps a `work/` volume for persistent storage in the docker container. This will be visible in the jupyter notebook as `work/`.
 
-### How do I specify which docker-stack notebook image to deploy?
+I've also added another mount point, `PROJECT_DIR`. This is set in the `notebook/env.sh` file, and points to the default value specified in that document. This maps to a `projects/` folder in the root directory of the jupyter notebook server file system
 
-You can customize the docker-stack notebook image to deploy by modifying the `notebook/Dockerfile`.  For example, you can build and deploy a `jupyter/all-spark-notebook` by modifying the Dockerfile like so:
-
-```
-FROM jupyter/all-spark-notebook:55d5ca6be183
-...
-```
-
-Once you modify the Dockerfile, don't forget to rebuild the image.
+It can also be changed to any folder you would like by setting it as an environment variable when running `up.sh`.
 
 ```
-# activate the docker machine
-eval "$(docker-machine env mymachine)"
-
-notebook/build.sh
+PROJECT_DIR="/home/jovyan/data" notebook/up.sh
 ```
+
+## Docker machine
+There is an optional mechanism for creating a docker machine. Use at your own risk.
 
 ### Can I run multiple notebook containers on the same VM?
 
@@ -151,19 +145,6 @@ bin/softlayer.sh myhost
 # Add DNS entry (SoftLayer DNS zone must exist for SOFTLAYER_DOMAIN)
 bin/sl-dns.sh myhost
 ```
-
-
-## Troubleshooting
-
-### Unable to connect to VirtualBox VM on Mac OS X when using Cisco VPN client.
-
-The Cisco VPN client blocks access to IP addresses that it does not know about, and may block access to a new VM if it is created while the Cisco VPN client is running.
-
-1. Stop Cisco VPN client. (It does not allow modifications to route table).
-2. Run `ifconfig` to list `vboxnet` virtual network devices.
-3. Run `sudo route -nv add -net 192.168.99 -interface vboxnetX`, where X is the number of the virtual device assigned to the VirtualBox VM.
-4. Start Cisco VPN client.
-
 
 
 # jupyter notebook - tensorflow README

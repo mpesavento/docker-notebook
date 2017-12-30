@@ -24,6 +24,5 @@ export SECRETS_VOLUME
 
 # Project files mapped volume
 # MJP: set path to project-notebooks
-: "${NOTEBOOK_PATH:=/Users/mpesavento/src/project_notebooks}"
-export PROJECT_DIR=$NOTEBOOK_PATH
+: "${PROJECT_DIR:=/Users/mpesavento/src/project_notebooks}"
 echo $PROJECT_DIR
