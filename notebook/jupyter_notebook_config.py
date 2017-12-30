@@ -45,12 +45,6 @@ if 'GEN_CERT' in os.environ:
     # Restrict access to the file
     os.chmod(pem_file, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = pem_file
-else:
-    print("***** got here?")
 
-    # this is how 3scan creates a consistent auth key for each docker container
-    # notebook.pem is created separately in the docker image
-    c.NotebookApp.certfile = u'/root/certs/notebook.pem'  # location of your certificate file
-
-# passwd created using notebook.auth.passwd()
+# passwd hash created using notebook.auth.passwd()
 c.NotebookApp.password = u'sha1:8471295b2d9a:2d07c7f0ab380357b2affe0b152f8059359d3c9b'

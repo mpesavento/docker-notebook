@@ -68,7 +68,8 @@ docker volume create --name "$WORK_VOLUME"
 echo "Bringing up notebook '$NAME'"
 echo "port '$PORT'"
 echo "working volume: $WORK_VOLUME"
-docker-compose -f "$DIR/$CONFIG" -p "$NAME" up
+docker-compose -f "$DIR/$CONFIG" -p "$NAME" up #-d
 
+# uncomment this if you are using docker-machine
 # IP=$(docker-machine ip $(docker-machine active))
 echo "Notebook $NAME listening on $IP:$PORT"
