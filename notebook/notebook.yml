@@ -9,7 +9,8 @@ services:
     image: my-notebook
     container_name: ${NAME}
     volumes:
-     - "work:/home/jovyan/work"
+     - "work:/home/jovyan/work"  # for persistant storage across containers
+     - "$PROJECT_DIR:/home/jovyan/projects/"  # to map host files to
     ports:
       - "${PORT}:8888"
 

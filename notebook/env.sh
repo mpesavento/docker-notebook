@@ -13,9 +13,6 @@ export NAME
 : ${PORT:=8888}
 export PORT
 
-# MJP: set path to project-notebooks
-# : "${NOTEBOOK_PATH:=/Users/mpesavento/src/project_notebooks}"
-# : "${WORK_VOLUME:=$NOTEBOOK_PATH}"
 
 # Container work volume name
 : "${WORK_VOLUME:=$NAME-work}"
@@ -24,3 +21,9 @@ export WORK_VOLUME
 # Container secrets volume name
 : "${SECRETS_VOLUME:=$NAME-secrets}"
 export SECRETS_VOLUME
+
+# Project files mapped volume
+# MJP: set path to project-notebooks
+: "${NOTEBOOK_PATH:=/Users/mpesavento/src/project_notebooks}"
+export PROJECT_DIR=$NOTEBOOK_PATH
+echo $PROJECT_DIR
